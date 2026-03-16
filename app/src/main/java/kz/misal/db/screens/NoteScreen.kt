@@ -22,6 +22,7 @@ fun NoteScreen(viewModel: NoteViewModel, modifier: Modifier) {
     val noteList by viewModel.notes.collectAsState()
 
     var title by rememberSaveable() { mutableStateOf("") }
+
     var note by rememberSaveable() { mutableStateOf("") }
 
     Column(modifier = modifier) {

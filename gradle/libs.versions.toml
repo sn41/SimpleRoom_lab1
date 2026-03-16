@@ -17,6 +17,9 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
+# для иконок
+androidx-compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
+androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

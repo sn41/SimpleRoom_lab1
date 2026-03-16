@@ -1,6 +1,9 @@
 package kz.misal.db.model
 
 import android.app.Application
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,4 +28,28 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             dao.insertNote(Note(title = title, content = content))
         }
     }
+
+    // todo 2 Теперь мы будем сохранять и дату заметки
+//    fun addNote(title: String, content: String) {
+//        viewModelScope.launch {
+//            val currentTimeData = System.currentTimeMillis()
+//            val newNote = Note(title = title, content = content, date = currentTimeData)
+//            dao.insertNote(newNote)
+//            isAddingNote = false // Возвращаемся на главный экран
+//        }
+//    }
+
+    // todo 3 Теперь мы будем сохранять и дату заметки и эмодзи
+//    fun addNote(title: String, content: String, emoji: String) {
+//        viewModelScope.launch {
+//            val currentTimeData = System.currentTimeMillis()
+//            val newNote = Note(title = title, content = content, date = currentTimeData, emoji = emoji)
+//            dao.insertNote(newNote)
+//            isAddingNote = false // Возвращаемся на главный экран
+//        }
+//    }
+
+    // Добавим состояние для навигации между экранами списка и добавления задач
+    // Состояние для навигации: true - экран создания, false - список
+    var isAddingNote by mutableStateOf(false)
 }
