@@ -34,7 +34,7 @@ abstract class AppDatabase : RoomDatabase() {
                     "note_database"
                 )
                     // todo 3 - добавим алгоритм миграции
-                    //.addMigrations(MIGRATION_1_2) // Указываем, как переходить
+//                    .addMigrations(MIGRATION_1_2) // Указываем, как переходить
                     .build()
                 INSTANCE = instance
                 instance

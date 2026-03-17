@@ -17,7 +17,7 @@ import kz.misal.db.model.NoteViewModel
 
 
 @Composable
-fun NoteScreen(viewModel: NoteViewModel, modifier: Modifier) {
+fun StartNoteScreen(viewModel: NoteViewModel, modifier: Modifier) {
     // Подписка на состояние
     val noteList by viewModel.notes.collectAsState()
 

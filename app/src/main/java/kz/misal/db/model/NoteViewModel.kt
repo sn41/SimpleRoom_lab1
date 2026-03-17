@@ -25,7 +25,8 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     fun addNote(title: String, content: String) {
         viewModelScope.launch {
-            dao.insertNote(Note(title = title, content = content))
+            val note = Note(title = title, content = content)
+            dao.insertNote(note)
         }
     }
 

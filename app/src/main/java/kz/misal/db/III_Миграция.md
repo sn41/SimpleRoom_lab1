@@ -1,3 +1,5 @@
+# Задание 3. Выполняем миграцию данных при изменении версии базы данных.
+
 ## Миграция
 
 Добавим к нашему приложению возможность выбора эмодзи и поле в базе данных для него, сопроводим новую версию механизмом миграции.
@@ -47,20 +49,30 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
 Теперь нужно увеличить версию базы данных с `1` до `2` и зарегистрировать нашу миграцию.
 
 ```kotlin
-@Database(entities = [Note::class], version = 2) // Версия стала 2
+@Database(entities = [Note::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun dao(): NoteDao
+    abstract fun noteDao(): NoteDao
 
     companion object {
-        fun build(context: Context) = Room.databaseBuilder(
-            context.applicationContext,
-            AppDatabase::class.java, "notes.db"
-        )
-        .addMigrations(MIGRATION_1_2) // Указываем, как переходить
-        .build()
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
+
+        fun getDatabase(context: Context): AppDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "note_database"
+                )
+                    // todo 3 - добавим алгоритм миграции
+                    .addMigrations(MIGRATION_1_2) // Указываем, как переходить
+                    .build()
+                INSTANCE = instance
+                instance
+            }
+        }
     }
 }
-
 ```
 
 ---
