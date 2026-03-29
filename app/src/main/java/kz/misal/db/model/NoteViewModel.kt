@@ -43,4 +43,11 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             dao.deleteNote(note)
         }
     }
+
+    // + Step 2 Добавьте кнопку очистки базы данных - удаления всех заметок
+    fun clearAllNotes() {
+        viewModelScope.launch {
+            dao.deleteAllNotes()
+        }
+    }
 }

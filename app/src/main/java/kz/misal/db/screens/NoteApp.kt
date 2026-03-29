@@ -7,7 +7,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 // + Step 1 Добавьте кнопку удаления заметки на элемент списка заметок
 import androidx.compose.material.icons.filled.Delete
+// + Step 2 Добавьте кнопку очистки базы данных - удаления всех заметок
+import androidx.compose.material.icons.filled.ClearAll
 import androidx.compose.material3.*
+// + Step 2 Добавьте кнопку очистки базы данных - удаления всех заметок
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -28,25 +32,38 @@ fun NoteApp(model: NoteViewModel) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainListScreen(model: NoteViewModel) {
     val notes by model.notes.collectAsState()
 
     Scaffold(
+        // + Step 2 Добавьте кнопку очистки базы данных - удаления всех заметок
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text("Мои Заметки") },
+                actions = {
+                    IconButton(onClick = { model.clearAllNotes() }) {
+                        Icon(Icons.Default.ClearAll, contentDescription = "Удалить всё")
+                    }
+                }
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = { model.isAddingNote = true }) {
                 Icon(Icons.Default.Add, contentDescription = "Добавить")
             }
         }) { padding ->
         LazyColumn(modifier = Modifier.padding(padding)) {
-            item {
-                Text(
-                    text = "Мои Заметки",
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineMedium
-                )
-            }
+            // - Step 2 Добавьте кнопку очистки базы данных - удаления всех заметок
+            // item {
+            //    Text(
+            //        text = "Мои Заметки",
+            //        modifier = Modifier.fillMaxWidth().padding(16.dp),
+            //        textAlign = TextAlign.Center,
+            //        style = MaterialTheme.typography.headlineMedium
+            //    )
+            // }
             items(notes) { note ->
                 val dateString = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
                     .format(Date(note.date))

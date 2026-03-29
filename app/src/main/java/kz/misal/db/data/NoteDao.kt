@@ -13,4 +13,8 @@ interface NoteDao {
 
     @Delete
     suspend fun deleteNote(note: Note)
+
+    // + Step 2 Добавьте кнопку очистки базы данных - удаления всех заметок
+    @Query("DELETE FROM notes")
+    suspend fun deleteAllNotes()
 }
