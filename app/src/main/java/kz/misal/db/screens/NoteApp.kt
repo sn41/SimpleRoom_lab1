@@ -5,6 +5,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+// + Step 1 Добавьте кнопку удаления заметки на элемент списка заметок
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -48,11 +50,24 @@ fun MainListScreen(model: NoteViewModel) {
             items(notes) { note ->
                 val dateString = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
                     .format(Date(note.date))
+                // - Step 1 Добавьте кнопку удаления заметки на элемент списка заметок
+                // ListItem(
+                //    leadingContent = { Text(note.emoji, fontSize = 32.sp) },
+                //    headlineContent = { Text(note.title) },
+                //    supportingContent = { Text(note.text) },
+                //    overlineContent = { Text(dateString) }
+                // )
+                // + Step 1 Добавьте кнопку удаления заметки на элемент списка заметок
                 ListItem(
                     leadingContent = { Text(note.emoji, fontSize = 32.sp) },
                     headlineContent = { Text(note.title) },
                     supportingContent = { Text(note.text) },
-                    overlineContent = { Text(dateString) }
+                    overlineContent = { Text(dateString) },
+                    trailingContent = {
+                        IconButton(onClick = { model.deleteNote(note) }) {
+                            Icon(Icons.Default.Delete, contentDescription = "Удалить")
+                        }
+                    }
                 )
             }
         }

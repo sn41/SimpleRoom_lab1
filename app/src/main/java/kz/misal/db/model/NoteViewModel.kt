@@ -36,4 +36,11 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             isAddingNote = false
         }
     }
+
+    // + Step 1 Добавьте кнопку удаления заметки на элемент списка заметок
+    fun deleteNote(note: Note) {
+        viewModelScope.launch {
+            dao.deleteNote(note)
+        }
+    }
 }
