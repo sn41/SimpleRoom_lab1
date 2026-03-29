@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey
 data class Note(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val title: String,
+    // - Step 3 Удалите поле "title" класса Note, пусть заметка сохраняет только текст
+    // val title: String,
     val text: String,
     val date: Long,
     val emoji: String = "📝"

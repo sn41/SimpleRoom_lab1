@@ -24,8 +24,13 @@ import java.util.*
 @Composable
 fun NoteApp(model: NoteViewModel) {
     if (model.isAddingNote) {
+        // - Step 3 Удалите поле "title" класса Note, пусть заметка сохраняет только текст
+        // AddNoteScreen(
+        //    onSave = model::addNote,
+        //    onBack = { model.isAddingNote = false })
+        // + Step 3 Удалите поле "title" класса Note, пусть заметка сохраняет только текст
         AddNoteScreen(
-            onSave = model::addNote,
+            onSave = { text, emoji -> model.addNote(text, emoji) },
             onBack = { model.isAddingNote = false })
     } else {
         MainListScreen(model)
@@ -74,11 +79,13 @@ fun MainListScreen(model: NoteViewModel) {
                 //    supportingContent = { Text(note.text) },
                 //    overlineContent = { Text(dateString) }
                 // )
-                // + Step 1 Добавьте кнопку удаления заметки на элемент списка заметок
+                // + Step 3 Удалите поле "title" класса Note, пусть заметка сохраняет только текст
                 ListItem(
                     leadingContent = { Text(note.emoji, fontSize = 32.sp) },
-                    headlineContent = { Text(note.title) },
-                    supportingContent = { Text(note.text) },
+                    // - Step 3 Удалите поле "title" класса Note, пусть заметка сохраняет только текст
+                    // headlineContent = { Text(note.title) },
+                    headlineContent = { Text(note.text) },
+                    // supportingContent = { Text(note.text) },
                     overlineContent = { Text(dateString) },
                     trailingContent = {
                         IconButton(onClick = { model.deleteNote(note) }) {
@@ -92,8 +99,12 @@ fun MainListScreen(model: NoteViewModel) {
 }
 
 @Composable
-fun AddNoteScreen(onSave: (String, String, String) -> Unit, onBack: () -> Unit) {
-    var title by remember { mutableStateOf("") }
+// - Step 3 Удалите поле "title" класса Note, пусть заметка сохраняет только текст
+// fun AddNoteScreen(onSave: (String, String, String) -> Unit, onBack: () -> Unit) {
+// + Step 3 Удалите поле "title" класса Note, пусть заметка сохраняет только текст
+fun AddNoteScreen(onSave: (String, String) -> Unit, onBack: () -> Unit) {
+    // - Step 3 Удалите поле "title" класса Note, пусть заметка сохраняет только текст
+    // var title by remember { mutableStateOf("") }
     var text by remember { mutableStateOf("") }
     var selectedEmoji by remember { mutableStateOf("📝") }
     val emojis = listOf("📝", "💡", "✅", "🔥", "🚀", "📌")
@@ -116,13 +127,14 @@ fun AddNoteScreen(onSave: (String, String, String) -> Unit, onBack: () -> Unit) 
             }
         }
 
-        OutlinedTextField(
-            value = title,
-            onValueChange = { title = it },
-            label = { Text("Заголовок") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(8.dp))
+        // - Step 3 Удалите поле "title" класса Note, пусть заметка сохраняет только текст
+        // OutlinedTextField(
+        //    value = title,
+        //    onValueChange = { title = it },
+        //    label = { Text("Заголовок") },
+        //    modifier = Modifier.fillMaxWidth()
+        // )
+        // Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = text,
             onValueChange = { text = it },
@@ -134,7 +146,12 @@ fun AddNoteScreen(onSave: (String, String, String) -> Unit, onBack: () -> Unit) 
         Row {
             Button(onClick = onBack) { Text("Отмена") }
             Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = { if (title.isNotBlank()) onSave(title, text, selectedEmoji) }) {
+            Button(onClick = {
+                // - Step 3 Удалите поле "title" класса Note, пусть заметка сохраняет только текст
+                // if (title.isNotBlank()) onSave(title, text, selectedEmoji)
+                // + Step 3 Удалите поле "title" класса Note, пусть заметка сохраняет только текст
+                if (text.isNotBlank()) onSave(text, selectedEmoji)
+            }) {
                 Text("Сохранить")
             }
         }

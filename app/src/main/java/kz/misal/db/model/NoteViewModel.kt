@@ -23,11 +23,26 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     var isAddingNote by mutableStateOf(false)
 
-    fun addNote(title: String, text: String, emoji: String) {
+    // - Step 3 Удалите поле "title" класса Note, пусть заметка сохраняет только текст
+    // fun addNote(title: String, text: String, emoji: String) {
+    //    viewModelScope.launch {
+    //        val currentTimeData = System.currentTimeMillis()
+    //        val newNote = Note(
+    //            title = title,
+    //            text = text,
+    //            date = currentTimeData,
+    //            emoji = emoji
+    //        )
+    //        dao.insertNote(newNote)
+    //        isAddingNote = false
+    //    }
+    // }
+
+    // + Step 3 Удалите поле "title" класса Note, пусть заметка сохраняет только текст
+    fun addNote(text: String, emoji: String) {
         viewModelScope.launch {
             val currentTimeData = System.currentTimeMillis()
             val newNote = Note(
-                title = title,
                 text = text,
                 date = currentTimeData,
                 emoji = emoji
