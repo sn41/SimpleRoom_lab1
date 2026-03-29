@@ -6,20 +6,40 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kz.misal.db.data.AppDatabase
 import kz.misal.db.data.Note
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     private val db = AppDatabase.getDatabase(application)
     private val dao = db.noteDao()
 
-    val notes: StateFlow<List<Note>> = dao.getAllNotes()
+    // + Step 5 Добавьте кнопку сортировки элементов по алфавиту
+    private val isSortedAlphabetically = MutableStateFlow(false)
+
+    // - Step 5 Добавьте кнопку сортировки элементов по алфавиту
+    // val notes: StateFlow<List<Note>> = dao.getAllNotes()
+    //    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    // + Step 5 Добавьте кнопку сортировки элементов по алфавиту
+    val notes: StateFlow<List<Note>> = isSortedAlphabetically
+        .flatMapLatest { sorted ->
+            if (sorted) dao.getAllNotesSortedByText() else dao.getAllNotes()
+        }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    // + Step 5 Добавьте кнопку сортировки элементов по алфавиту
+    fun toggleSort() {
+        isSortedAlphabetically.value = !isSortedAlphabetically.value
+    }
 
     var isAddingNote by mutableStateOf(false)
 

@@ -9,6 +9,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 // + Step 2 Добавьте кнопку очистки базы данных - удаления всех заметок
 import androidx.compose.material.icons.filled.ClearAll
+// + Step 5 Добавьте кнопку сортировки элементов по алфавиту
+import androidx.compose.material.icons.filled.SortByAlpha
 import androidx.compose.material3.*
 // + Step 2 Добавьте кнопку очистки базы данных - удаления всех заметок
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -48,6 +50,10 @@ fun MainListScreen(model: NoteViewModel) {
             CenterAlignedTopAppBar(
                 title = { Text("Мои Заметки") },
                 actions = {
+                    // + Step 5 Добавьте кнопку сортировки элементов по алфавиту
+                    IconButton(onClick = { model.toggleSort() }) {
+                        Icon(Icons.Default.SortByAlpha, contentDescription = "Сортировка")
+                    }
                     IconButton(onClick = { model.clearAllNotes() }) {
                         Icon(Icons.Default.ClearAll, contentDescription = "Удалить всё")
                     }
